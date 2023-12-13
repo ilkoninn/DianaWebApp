@@ -1,0 +1,57 @@
+﻿<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+
+        <div class="container">
+            <table class="table table-bordered">
+                <div class="d-flex justify-content-between">
+                    <h4 class="mb-5">Category Table</h4>
+                    <a asp-action="Create" asp-controller="Category">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </a>
+                </div>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>CRUD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var count = 0;
+                        foreach (var item in ViewData["Categories"] as ICollection<Category>)
+                        {
+                            count++;
+                            <tr>
+                                <th>@count</th>
+                                <th>@item.Name</th>
+                                <th>
+                                    <a class="btn btn-warning" asp-action="Update" asp-controller="Category" asp-route-id="@item.Id">Update</a>
+                                    <a class="btn btn-info" asp-action="Detail" asp-controller="Category" asp-route-id="@item.Id">Detail</a>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-controller="Category" asp-route-id="@item.Id">Delete</a>
+                                </th>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
+                Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from
+                BootstrapDash.
+            </span>
+            <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">
+                Copyright © 2021. All rights
+                reserved.
+            </span>
+        </div>
+    </footer>
+    <!-- partial -->
+</div>
+<!-- main-panel ends -->
