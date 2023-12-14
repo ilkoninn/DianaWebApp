@@ -1,4 +1,5 @@
 ﻿using DianaWebApp.Models.Entity;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 
 namespace DianaWebApp.Models
@@ -14,5 +15,14 @@ namespace DianaWebApp.Models
         public ICollection<ProductColor> ProductColors { get; set; }
         public ICollection<ProductSize> ProductSizes { get; set; }
         public ICollection<ProductMaterial> ProductMaterials { get; set; }
+        
+        // Additional Fields
+        [NotMapped]
+        public List<Color> Colors { get; set; }
+        [NotMapped]
+        public List<Size> Sizes { get; set; }
+        [NotMapped]
+        public List<Material> Materials { get; set; }
+
     }
 }

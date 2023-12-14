@@ -5,7 +5,7 @@
     <div class="content-wrapper">
         <div class="container">
             <h4 class="mb-5">Category Create</h4>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="col-6">
                     <div class="mb-3">
                         <label asp-for="Title" class="form-label">Slider Title</label>
@@ -35,6 +35,7 @@
                 </div>
                 <a asp-action="Table" asp-controller="Slider">
                     <button type="submit" class="btn btn-primary">Submit</button>
+                    <button asp-controller="Slider" asp-action="Table" class="btn btn-secondary">Cancel</button>
                 </a>
             </form>
         </div>

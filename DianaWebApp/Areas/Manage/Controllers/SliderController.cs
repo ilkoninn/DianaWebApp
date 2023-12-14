@@ -2,7 +2,6 @@
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    [Authorize(Roles = "Admin")]
     public class SliderController : Controller
     {
         private readonly AppDbContext _db;
@@ -83,7 +82,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateSliderVM updateSliderVM)
         {
-            if(updateSliderVM == null) return BadRequest();
+            if(updateSliderVM.Id == null && updateSliderVM.Id < 0) return BadRequest();
             Slider oldSlider = await _db.Sliders
                 .Where(x => !x.IsDeleted)
                 .FirstOrDefaultAsync(x => x.Id == updateSliderVM.Id);

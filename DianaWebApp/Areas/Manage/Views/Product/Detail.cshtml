@@ -1,1 +1,88 @@
-﻿
+﻿@model Product
+
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="container">
+
+            <h4 class="mb-1">Product Title: </h4>
+            <h3>@Model.Title</h3>
+            <h4 class="mt-4">Product Description: </h4>
+            <h3>@Model.Description</h3>
+            <h4 class="mt-4">Product Price: </h4>
+            <h3>@Model.Price</h3>
+            <h4 class="mt-4">Product Category: </h4>
+            <h3>@Model.Category.Name</h3>
+            <h4 class="mt-4">Product Colors: </h4>
+            <h3>
+                @{
+                    int countColor = 0;
+                }
+                @foreach (var color in Model.Colors)
+                {
+                    countColor++;
+                    @(Model.Colors.Count() != countColor ? color.Name + ", " : color.Name + "")
+                }
+            </h3>
+            <h4 class="mt-4">Product Sizes: </h4>
+            <h3>
+                @{
+                    int countSize = 0;
+                }
+                @foreach (var size in Model.Sizes)
+                {
+                    countSize++;
+                    @(Model.Sizes.Count() != countSize ? size.Name + ", " : size.Name + "")
+                }
+            </h3>
+            <h4 class="mt-4">Product Materials: </h4>
+            <h3>
+                @{
+                    int countMaterial = 0;
+                }
+                @foreach (var material in Model.Materials)
+                {
+                    countSize++;
+                    @(Model.Materials.Count() != countMaterial ? material.Name + ", " : material.Name + "")
+                }
+            </h3>
+            <h4 class="mt-4">Product Images:</h4>
+            <div class="row align-items-start">
+                @if(Model.Images == null)
+                {
+                    @foreach (var item in Model.Images.Select(x => x.ImgUrl).ToList())
+                    {
+                        <div class="col-2 mb-3 position-relative">
+                            <img style="width: 100%; height: 200px; border-radius: 5px;" src="~/Upload/ProductImages/@item" />
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h3>No Picture</h3>
+                }
+
+            </div>
+
+
+            <a asp-controller="Product" asp-action="Table" class="btn btn-secondary mt-5">Go Back</a>
+
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
+                Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from
+                BootstrapDash.
+            </span>
+            <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">
+                Copyright © 2021. All rights
+                reserved.
+            </span>
+        </div>
+    </footer>
+    <!-- partial -->
+</div>
+<!-- main-panel ends -->

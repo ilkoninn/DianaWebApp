@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "C:\\Users\\99470\\Desktop\\DianaWebApp\\DianaWebApp\\wwwroot\\Upload\\ProductImages\\9a4229ac-fe27-4a1c-b792-776a5c9406242-1-70x78.png",
+      "PackagePath": "staticwebassets\\Upload\\ProductImages\\9a4229ac-fe27-4a1c-b792-776a5c9406242-1-70x78.png"
+    },
+    {
+      "Id": "C:\\Users\\99470\\Desktop\\DianaWebApp\\DianaWebApp\\wwwroot\\Upload\\SliderImages\\2e272989-2f72-48d8-8daa-5ab851c541771-9-270x300.jpg",
+      "PackagePath": "staticwebassets\\Upload\\SliderImages\\2e272989-2f72-48d8-8daa-5ab851c541771-9-270x300.jpg"
+    },
+    {
       "Id": "C:\\Users\\99470\\Desktop\\DianaWebApp\\DianaWebApp\\wwwroot\\assets\\css\\animate.css",
       "PackagePath": "staticwebassets\\assets\\css\\animate.css"
     },

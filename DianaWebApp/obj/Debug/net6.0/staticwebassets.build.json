@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hS/p3/yIFa7XsRy4xwtFAh3FsqTpg6M6pHpPnMVy120=",
+  "Hash": "RKr8fSt/cIVXOBSXSu0xLa+a3BFo+C/BYDIHENu1DlI=",
   "Source": "DianaWebApp",
   "BasePath": "_content/DianaWebApp",
   "Mode": "Default",
@@ -29969,6 +29969,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\manage\\assets\\vendors\\x-editable\\bootstrap-editable.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\99470\\Desktop\\DianaWebApp\\DianaWebApp\\wwwroot\\Upload\\ProductImages\\9a4229ac-fe27-4a1c-b792-776a5c9406242-1-70x78.png",
+      "SourceId": "DianaWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\99470\\Desktop\\DianaWebApp\\DianaWebApp\\wwwroot\\",
+      "BasePath": "_content/DianaWebApp",
+      "RelativePath": "Upload/ProductImages/9a4229ac-fe27-4a1c-b792-776a5c9406242-1-70x78.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\ProductImages\\9a4229ac-fe27-4a1c-b792-776a5c9406242-1-70x78.png"
+    },
+    {
+      "Identity": "C:\\Users\\99470\\Desktop\\DianaWebApp\\DianaWebApp\\wwwroot\\Upload\\SliderImages\\2e272989-2f72-48d8-8daa-5ab851c541771-9-270x300.jpg",
+      "SourceId": "DianaWebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\99470\\Desktop\\DianaWebApp\\DianaWebApp\\wwwroot\\",
+      "BasePath": "_content/DianaWebApp",
+      "RelativePath": "Upload/SliderImages/2e272989-2f72-48d8-8daa-5ab851c541771-9-270x300.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\SliderImages\\2e272989-2f72-48d8-8daa-5ab851c541771-9-270x300.jpg"
     }
   ]
 }

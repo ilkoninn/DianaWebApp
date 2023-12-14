@@ -1,10 +1,17 @@
 ﻿<!-- partial -->
 <div class="main-panel">
     <div class="content-wrapper">
-        
+
         <div class="container">
             <table class="table table-bordered">
-                <h4 class="mb-5">Product Table</h4>
+
+                <div class="d-flex justify-content-between">
+                    <h4 class="mb-5">Category Table</h4>
+                    <a asp-action="Create" asp-controller="Product">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </a>
+                </div>
+
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -20,18 +27,48 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Colors</th>
-                        <th>Sizes</th>
-                        <th>Materials</th>
-                        <th>Image</th>
-                        <th>Category</th>
-                        <th>CRUD</th>
-                    </tr>
+                    @{
+                        var count = 0;
+                        foreach (var item in ViewData["Products"] as ICollection<Product>)
+                        {
+                            count++;
+                            <tr>
+                                <th>@count</th>
+                                <th>@item.Title</th>
+                                <th>@item.Description</th>
+                                <th>@item.Price</th>
+                                <th>
+                                    @String.Join(", ", item.ProductColors.Select(x => x.Color.Name).ToList())
+                                </th>
+                                <th>
+                                    @String.Join(", ", item.ProductSizes.Select(x => x.Size.Name).ToList())
+                                </th>
+                                <th>
+                                    @String.Join(", ", item.ProductMaterials.Select(x => x.Material.Name).ToList())
+                                </th>
+                                <th>
+                                    @if (item.Images.FirstOrDefault()?.ImgUrl == null)
+                                    {
+                                        <p>No Picture</p>
+                                    }
+                                    else
+                                    {
+                                        <div style="width:100px">
+                                            <img width="100%" src="~/Upload/ProductImages/@item.Images.FirstOrDefault()?.ImgUrl">
+                                        </div>
+                                    }
+                                </th>
+                                <th>
+                                    @item.Category.Name
+                                </th>
+                                <th>
+                                    <a class="btn btn-warning" asp-action="Update" asp-controller="Product" asp-route-id="@item.Id">Update</a>
+                                    <a class="btn btn-info" asp-action="Detail" asp-controller="Product" asp-route-id="@item.Id">Detail</a>
+                                    <a class="btn btn-danger" asp-action="Delete" asp-controller="Product" asp-route-id="@item.Id">Delete</a>
+                                </th>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>

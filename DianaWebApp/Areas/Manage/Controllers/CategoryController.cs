@@ -5,7 +5,6 @@ using System.Net.Sockets;
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
-    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _db;
@@ -70,10 +69,10 @@ namespace DianaWebApp.Areas.Manage.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateCategoryVM updateCategoryVM)
         {
+            if(updateCategoryVM.Id == null && updateCategoryVM.Id < 0) return BadRequest();
             Category category = await _db.Categories
                 .Where(x => !x.IsDeleted)
                 .FirstOrDefaultAsync(x => x.Id == updateCategoryVM.Id);
-
             if(category == null) return NotFound();
 
             category.Name = updateCategoryVM.Name;
