@@ -5,6 +5,7 @@ using System.Net.Sockets;
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _db;
@@ -14,6 +15,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
             _db = db;
         }
 
+        //<-- Table Section -->
         public async Task<IActionResult> Table()
         {
             ViewData["Categories"] = await _db.Categories
@@ -22,6 +24,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
             return View();
         }
 
+        //<-- Create Section -->
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -30,6 +33,8 @@ namespace DianaWebApp.Areas.Manage.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryVM createCategoryVM)
         {
+            if(createCategoryVM == null) return BadRequest();
+            
             Category category = new()
             {
                 Name = createCategoryVM.Name,
@@ -42,7 +47,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
             return RedirectToAction(nameof(Table));
         }
 
-
+        //<-- Update Section -->
         [HttpGet]
         public async Task<IActionResult> Update(int Id)
         {
@@ -78,7 +83,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
             return RedirectToAction(nameof(Table));
         }
 
-
+        //<-- Detail Section -->
         [HttpGet]
         public async Task<IActionResult> Detail(int Id)
         {
@@ -90,16 +95,10 @@ namespace DianaWebApp.Areas.Manage.Controllers
 
             if (category == null) return NotFound();
 
-            UpdateCategoryVM updateCategoryVM = new()
-            {
-                Id = Id,
-                Name = category.Name,
-            };
-
-            return View(updateCategoryVM);
+            return View(category);
         }
 
-
+        //<-- Delete Section -->
         [HttpGet]
         public async Task<IActionResult> Delete(int Id)
         {

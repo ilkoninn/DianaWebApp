@@ -10,6 +10,9 @@
                     <div class="mb-3">
                         <label asp-for="Name" class="form-label">Category Name</label>
                         <input asp-for="Name" class="form-control">
+                        <div style="color: red; margin-top: 10px; margin-left: 10px;">
+                            <span asp-validation-for="Name"></span>
+                        </div>
                     </div>
                 </div>
 

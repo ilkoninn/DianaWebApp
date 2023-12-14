@@ -1,5 +1,7 @@
 
 
+using Microsoft.AspNetCore.Identity;
+
 namespace DianaWebApp
 {
     public class Program
@@ -13,7 +15,22 @@ namespace DianaWebApp
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
-            
+            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                // Password settings.
+                options.Password.RequiredLength = 8;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.";
+
+            }).AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
             var app = builder.Build();
 
 

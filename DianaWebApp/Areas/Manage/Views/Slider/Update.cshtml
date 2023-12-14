@@ -1,1 +1,58 @@
-﻿
+﻿@model UpdateSliderVM
+
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="container">
+            <h4 class="mb-5">Category Create</h4>
+            <form method="post">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label">Slider Title</label>
+                        <input asp-for="Title" class="form-control">
+                        <div style="color: red; margin-top: 10px; margin-left: 10px;">
+                            <span asp-validation-for="Title"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label asp-for="File" class="form-label">Slider Image</label>
+                        <input asp-for="File" class="form-control">
+                        <div style="color: red; margin-top: 10px; margin-left: 10px;">
+                            <span asp-validation-for="File"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Slider Description</label>
+                        <input asp-for="Description" class="form-control">
+                        <div style="color: red; margin-top: 10px; margin-left: 10px;">
+                            <span asp-validation-for="Description"></span>
+                        </div>
+                    </div>
+                </div>
+                <a asp-action="Table" asp-controller="Slider">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </a>
+            </form>
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
+                Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from
+                BootstrapDash.
+            </span>
+            <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">
+                Copyright © 2021. All rights
+                reserved.
+            </span>
+        </div>
+    </footer>
+    <!-- partial -->
+</div>
+<!-- main-panel ends -->

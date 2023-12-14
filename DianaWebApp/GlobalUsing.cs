@@ -3,4 +3,7 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using DianaWebApp.Models;
 global using DianaWebApp.Areas.Manage.ViewModels;
-
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Identity;
+global using DianaWebApp.Helper;
+global using Microsoft.AspNetCore.Authorization;
