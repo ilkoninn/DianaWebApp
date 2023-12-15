@@ -7,7 +7,7 @@ namespace DianaWebApp.Services
     {
         public static void SendMessage(string toUser, string userName)
         {
-            using(var client = new SmtpClient("smpt.gmail.com", 587))
+            using(var client = new SmtpClient("smtp.gmail.com", 587))
             {
                 client.UseDefaultCredentials = false;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
