@@ -58,7 +58,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 Materials = materials,
                 Sizes = sizes,
             };
-            
+
             return View(createProductVM);
         }
         [HttpPost]
@@ -66,9 +66,32 @@ namespace DianaWebApp.Areas.Manage.Controllers
         {
             if (createProductVM == null) return BadRequest();
 
-            if (!ModelState.IsValid) 
+            // Check Product Section
+            var existsSameTitle = await _db.Products
+                .Where(x => !x.IsDeleted && x.Title == createProductVM.Title )
+                .FirstOrDefaultAsync() != null;
+            var existsSameDescription = await _db.Products
+                .Where(x => !x.IsDeleted && x.Description == createProductVM.Description)
+                .FirstOrDefaultAsync() != null;
+
+            if (existsSameTitle)
             {
-                return View();
+                ModelState.AddModelError("Title", "There is a same title product in Table!");
+            }
+            if (existsSameDescription)
+            {
+                ModelState.AddModelError("Description", "There is a same description product in Table!");
+            }
+
+
+            if (!ModelState.IsValid)
+            {
+                createProductVM.Colors = await _db.Colors.Where(x => !x.IsDeleted).ToListAsync();
+                createProductVM.Sizes = await _db.Sizes.Where(x => !x.IsDeleted).ToListAsync();
+                createProductVM.Materials = await _db.Materials.Where(x => !x.IsDeleted).ToListAsync();
+                createProductVM.Categories = await _db.Categories.Where(x => !x.IsDeleted).ToListAsync();
+                
+                return View(createProductVM);
             };
 
             Product newProduct = new()
@@ -78,10 +101,12 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 Price = createProductVM.Price,
                 CategoryId = int.Parse(createProductVM.CategoryId),
                 Images = new List<ProductImage>(),
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
             };
 
             // Product Image Section
-            if(createProductVM.Images != null)
+            if (createProductVM.Images != null)
             {
                 foreach (var item in createProductVM.Images)
                 {
@@ -105,6 +130,16 @@ namespace DianaWebApp.Areas.Manage.Controllers
                     newProduct.Images.Add(ProductImage);
                 }
             }
+            else
+            {
+                ModelState.AddModelError("Images", "You must be upload a photo!");
+                createProductVM.Colors = await _db.Colors.Where(x => !x.IsDeleted).ToListAsync();
+                createProductVM.Sizes = await _db.Sizes.Where(x => !x.IsDeleted).ToListAsync();
+                createProductVM.Materials = await _db.Materials.Where(x => !x.IsDeleted).ToListAsync();
+                createProductVM.Categories = await _db.Categories.Where(x => !x.IsDeleted).ToListAsync();
+
+                return View(createProductVM);
+            }
 
             // Product Color Section
             if (createProductVM.ColorIds != null)
@@ -120,7 +155,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
                         createProductVM.Sizes = await _db.Sizes.Where(x => !x.IsDeleted).ToListAsync();
                         createProductVM.Materials = await _db.Materials.Where(x => !x.IsDeleted).ToListAsync();
                         createProductVM.Categories = await _db.Categories.Where(x => !x.IsDeleted).ToListAsync();
-                        
+
                         return View(createProductVM);
                     }
 
@@ -130,7 +165,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
                         ColorId = item,
                     };
 
-                    await _db.ProductColors.AddAsync(newProductColor); 
+                    await _db.ProductColors.AddAsync(newProductColor);
                 }
             }
 
@@ -176,7 +211,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
                         createProductVM.Sizes = await _db.Sizes.Where(x => !x.IsDeleted).ToListAsync();
                         createProductVM.Materials = await _db.Materials.Where(x => !x.IsDeleted).ToListAsync();
                         createProductVM.Categories = await _db.Categories.Where(x => !x.IsDeleted).ToListAsync();
-                        
+
                         return View(createProductVM);
                     }
 
@@ -213,8 +248,8 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 .ThenInclude(ml => ml.Material)
                 .Include(ps => ps.ProductSizes)
                 .ThenInclude(s => s.Size)
-                .FirstOrDefaultAsync(x  => x.Id == Id);
-            if(oldProduct == null) return NotFound();
+                .FirstOrDefaultAsync(x => x.Id == Id);
+            if (oldProduct == null) return NotFound();
 
             UpdateProductVM updateProductVM = new()
             {
@@ -248,7 +283,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateProductVM updateProductVM)
         {
-            if(updateProductVM.Id == null && updateProductVM.Id < 0) return BadRequest();
+            if (updateProductVM.Id == null && updateProductVM.Id < 0) return BadRequest();
             Product oldProduct = await _db.Products
                 .Where(x => !x.IsDeleted)
                 .Include(pi => pi.Images)
@@ -259,16 +294,52 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 .Include(ps => ps.ProductSizes)
                 .ThenInclude(s => s.Size)
                 .FirstOrDefaultAsync(x => x.Id == updateProductVM.Id);
-            if(oldProduct == null) return NotFound();
+            if (oldProduct == null) return NotFound();
+
+            // Check Product Section
+            var existsSameTitle = await _db.Products
+                .Where(x => !x.IsDeleted && x.Title == updateProductVM.Title && x.Id != updateProductVM.Id)
+                .FirstOrDefaultAsync() != null;
+            var existsSameDescription = await _db.Products
+                .Where(x => !x.IsDeleted && x.Description == updateProductVM.Description && x.Id != updateProductVM.Id)
+                .FirstOrDefaultAsync() != null;
+
+            if (existsSameTitle)
+            {
+                ModelState.AddModelError("Title", "There is a same title Product in Table!");
+            }
+            if (existsSameDescription)
+            {
+                ModelState.AddModelError("Description", "There is a same description Product in Table!");
+            }
 
             if (!ModelState.IsValid)
             {
-                return View();
+                updateProductVM.Colors = await _db.Colors.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.Sizes = await _db.Sizes.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.Materials = await _db.Materials.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.Categories = await _db.Categories.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.productImageVMs = new();
+
+                foreach (var item in oldProduct.Images)
+                {
+                    ProductImageVM productImageVM = new()
+                    {
+                        Id = item.Id,
+                        ImgUrl = item.ImgUrl,
+                    };
+
+                    updateProductVM.productImageVMs.Add(productImageVM);
+                }
+
+                return View(updateProductVM);
             }
 
             oldProduct.Title = updateProductVM.Title;
             oldProduct.Description = updateProductVM.Description;
             oldProduct.Price = updateProductVM.Price;
+            oldProduct.UpdatedDate = DateTime.Now;
+            oldProduct.CreatedDate = oldProduct.CreatedDate;
             oldProduct.CategoryId = int.Parse(updateProductVM.CategoryId);
 
             oldProduct.ProductColors.Clear();
@@ -405,6 +476,18 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 }
             }
 
+            if (oldProduct.Images.Count == 0)
+            {
+                ModelState.AddModelError("Images", "You must be upload a photo!");
+                updateProductVM.Colors = await _db.Colors.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.Sizes = await _db.Sizes.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.Materials = await _db.Materials.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.Categories = await _db.Categories.Where(x => !x.IsDeleted).ToListAsync();
+                updateProductVM.productImageVMs = new();
+
+                return View(updateProductVM);
+            }
+
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Table));
@@ -426,7 +509,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 .Include(ps => ps.ProductSizes)
                 .ThenInclude(s => s.Size)
                 .FirstOrDefaultAsync(x => x.Id == Id);
-            if(oldProduct == null) return NotFound();
+            if (oldProduct == null) return NotFound();
 
             oldProduct.Colors = oldProduct.ProductColors.Select(x => x.Color).ToList();
             oldProduct.Sizes = oldProduct.ProductSizes.Select(x => x.Size).ToList();
@@ -447,7 +530,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
 
             oldProduct.IsDeleted = true;
 
-            await _db.SaveChangesAsync();   
+            await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Table));
         }

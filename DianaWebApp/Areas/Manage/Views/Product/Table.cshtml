@@ -47,16 +47,9 @@
                                     @String.Join(", ", item.ProductMaterials.Select(x => x.Material.Name).ToList())
                                 </th>
                                 <th>
-                                    @if (item.Images.FirstOrDefault()?.ImgUrl == null)
-                                    {
-                                        <p>No Picture</p>
-                                    }
-                                    else
-                                    {
-                                        <div style="width:100px">
-                                            <img width="100%" src="~/Upload/ProductImages/@item.Images.FirstOrDefault()?.ImgUrl">
-                                        </div>
-                                    }
+                                    <div style="width:100px">
+                                        <img width="100%" src="~/Upload/ProductImages/@item.Images.FirstOrDefault()?.ImgUrl">
+                                    </div>
                                 </th>
                                 <th>
                                     @item.Category.Name

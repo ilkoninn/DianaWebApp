@@ -8,7 +8,7 @@
             <form method="post" enctype="multipart/form-data">
                 <div class="col-4">
                     <div class="mb-3">
-                        <label asp-for="Title" class="form-label">Slider Title</label>
+                        <label asp-for="Title" class="form-label">Product Title</label>
                         <input asp-for="Title" class="form-control">
                         <div style="color: red; margin-top: 10px; margin-left: 10px;">
                             <span asp-validation-for="Title"></span>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-4">
                     <div class="mb-3">
-                        <label asp-for="Price" class="form-label">Slider Title</label>
+                        <label asp-for="Price" class="form-label">Product Price</label>
                         <input asp-for="Price" class="form-control">
                         <div style="color: red; margin-top: 10px; margin-left: 10px;">
                             <span asp-validation-for="Price"></span>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <label asp-for="CategoryId" class="form-label">Category</label>
+                    <label asp-for="CategoryId" class="form-label">Product Category</label>
                     <select asp-for="CategoryId" asp-items="new SelectList(Model.Categories, nameof(Category.Id), nameof(Category.Name))" class="form-select mx-3">
                         <option value="null">Choose Category</option>
                     </select>
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <label asp-for="ColorIds" class="form-label">Tags</label>
+                    <label asp-for="ColorIds" class="form-label">Product Color</label>
                     <br />
                     <select asp-for="ColorIds" asp-items="new SelectList(Model.Colors, nameof(Color.Id), nameof(Color.Name))" class="form-select mx-3">
                     </select>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <label asp-for="SizeIds" class="form-label">Tags</label>
+                    <label asp-for="SizeIds" class="form-label">Product Size</label>
                     <br />
                     <select asp-for="SizeIds" asp-items="new SelectList(Model.Sizes, nameof(Size.Id), nameof(Size.Name))" class="form-select mx-3">
                     </select>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <label asp-for="MaterialIds" class="form-label">Tags</label>
+                    <label asp-for="MaterialIds" class="form-label">Product Material</label>
                     <br />
                     <select asp-for="MaterialIds" asp-items="new SelectList(Model.Materials, nameof(Material.Id), nameof(Material.Name))" class="form-select mx-3">
                     </select>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-4">
                     <div class="mb-3">
-                        <label asp-for="Description" class="form-label">Slider Description</label>
+                        <label asp-for="Description" class="form-label">Product Description</label>
                         <input asp-for="Description" class="form-control">
                         <div style="color: red; margin-top: 10px; margin-left: 10px;">
                             <span asp-validation-for="Description"></span>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="col-12 mt-3 mx-3">
-                    <label asp-for="Images" class="form-label">Additional Images</label>
+                    <label asp-for="Images" class="form-label">Product Images</label>
                     <div class="row align-items-start">
                         @foreach (var item in Model.productImageVMs.ToList())
                         {
@@ -82,14 +82,14 @@
                         }
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4 mb-5">
                     <label asp-for="Images" class="form-label">Product Images</label>
                     <input asp-for="Images" class="form-control">
                     <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                        <span asp-validation-for="MaterialIds"></span>
+                        <span asp-validation-for="Images"></span>
                     </div>
                 </div>
-                <a asp-action="Table" asp-controller="Product">
+                <a asp-action="Table" asp-controller="Product" class="mt-4">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button asp-controller="Product" asp-action="Table" class="btn btn-secondary">Cancel</button>
                 </a>

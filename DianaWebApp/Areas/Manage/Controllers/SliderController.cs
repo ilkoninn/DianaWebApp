@@ -1,4 +1,6 @@
 ﻿
+using DianaWebApp.Areas.Manage.ViewModels;
+
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
@@ -33,13 +35,36 @@ namespace DianaWebApp.Areas.Manage.Controllers
         {
             if (createSliderVM == null) return BadRequest();
 
-            if (!createSliderVM.File.CheckType("image/"))
+            // Check Slider Section
+            var existsSameTitle =  await _db.Sliders
+                .Where(x => !x.IsDeleted && x.Title == createSliderVM.Title)
+                .FirstOrDefaultAsync() != null;
+            var existsSameDescription = await _db.Sliders
+                .Where(x => !x.IsDeleted && x.Description == createSliderVM.Description)
+                .FirstOrDefaultAsync() != null;
+
+            if(existsSameTitle)
             {
-                ModelState.AddModelError("File", "File type is not image");   
+                ModelState.AddModelError("Title", "There is a same title slider in Table!");
             }
-            if (!createSliderVM.File.CheckLength(2097152))
+            if (existsSameDescription)
             {
-                ModelState.AddModelError("File", "File size must be 2MB");
+                ModelState.AddModelError("Description", "There is a same description slider in Table!");
+            }
+            if(createSliderVM.File != null)
+            {
+                if (!createSliderVM.File.CheckType("image/"))
+                {
+                    ModelState.AddModelError("File", "File type is not image");
+                }
+                if (!createSliderVM.File.CheckLength(2097152))
+                {
+                    ModelState.AddModelError("File", "File size must be 2MB");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("File", "You must be upload a photo(1920x1080)!");
             }
 
             if (!ModelState.IsValid)
@@ -51,7 +76,9 @@ namespace DianaWebApp.Areas.Manage.Controllers
             {
                 Title = createSliderVM.Title,
                 Description = createSliderVM.Description,
-                ImgUrl = createSliderVM.File.Upload(_env.WebRootPath, @"\Upload\SliderImages\")
+                ImgUrl = createSliderVM.File.Upload(_env.WebRootPath, @"\Upload\SliderImages\"),
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
             };
 
             await _db.Sliders.AddAsync(newSlider);
@@ -88,23 +115,48 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 .FirstOrDefaultAsync(x => x.Id == updateSliderVM.Id);
             if(oldSlider == null) return NotFound();
 
-            if (updateSliderVM.File.CheckType("image/"))
+            // Check Slider Section
+            var existsSameTitle = await _db.Sliders
+                .Where(x => !x.IsDeleted && x.Title == updateSliderVM.Title && x.Id != updateSliderVM.Id)
+                .FirstOrDefaultAsync() != null;
+            var existsSameDescription = await _db.Sliders
+                .Where(x => !x.IsDeleted && x.Description == updateSliderVM.Description && x.Id != updateSliderVM.Id)
+                .FirstOrDefaultAsync() != null;
+
+            if (existsSameTitle)
             {
-                ModelState.AddModelError("File", "File type is not Image");
+                ModelState.AddModelError("Title", "There is a same title slider in Table!");
             }
-            if (updateSliderVM.File.CheckLength(2097152))
+            if (existsSameDescription)
             {
-                ModelState.AddModelError("File", "File size must be not over than 2MB!");
+                ModelState.AddModelError("Description", "There is a same description slider in Table!");
+            }
+            if (updateSliderVM.File != null)
+            {
+                if (!updateSliderVM.File.CheckType("image/"))
+                {
+                    ModelState.AddModelError("File", "File type is not image");
+                }
+                if (!updateSliderVM.File.CheckLength(2097152))
+                {
+                    ModelState.AddModelError("File", "File size must be 2MB");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("File", "You must be upload a photo(1920x1080)!");
             }
 
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(updateSliderVM);
             }
 
             oldSlider.Title = updateSliderVM.Title;
             oldSlider.Description = updateSliderVM.Description;
             oldSlider.ImgUrl = updateSliderVM.File.Upload(_env.WebRootPath, @"\Upload\SliderImages\");
+            oldSlider.CreatedDate = oldSlider.CreatedDate;
+            oldSlider.UpdatedDate = DateTime.Now;
 
             await _db.SaveChangesAsync();
 

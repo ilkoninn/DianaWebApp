@@ -34,9 +34,23 @@ namespace DianaWebApp.Areas.Manage.Controllers
         {
             if(createCategoryVM == null) return BadRequest();
             
+            // Check Category Section
+            var existsSameCategoryName = await _db.Categories
+                .Where(x => !x.IsDeleted && x.Name == createCategoryVM.Name)
+                .FirstOrDefaultAsync() != null;
+
+            if(existsSameCategoryName)
+            {
+                ModelState.AddModelError("Name", "There is a same name category in Table!");
+            }
+
+            if (!ModelState.IsValid) return View(createCategoryVM);
+
             Category category = new()
             {
                 Name = createCategoryVM.Name,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
             };
 
             await _db.Categories.AddAsync(category);
@@ -75,7 +89,22 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 .FirstOrDefaultAsync(x => x.Id == updateCategoryVM.Id);
             if(category == null) return NotFound();
 
+
+            // Check Category Section 
+            var existsSameCategoryName = await _db.Categories
+                .Where(x => !x.IsDeleted && x.Name == updateCategoryVM.Name && updateCategoryVM.Id != x.Id)
+                .FirstOrDefaultAsync() != null;
+
+            if (existsSameCategoryName)
+            {
+                ModelState.AddModelError("Name", "There is a same name category in Table!");
+            }
+
+            if (!ModelState.IsValid) return View(updateCategoryVM);
+
             category.Name = updateCategoryVM.Name;
+            category.CreatedDate = category.CreatedDate;
+            category.UpdatedDate = DateTime.Now;
 
             await _db.SaveChangesAsync();
 

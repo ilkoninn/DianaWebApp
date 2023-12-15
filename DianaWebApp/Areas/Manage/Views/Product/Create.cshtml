@@ -69,11 +69,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4 mb-5">
                     <label asp-for="Images" class="form-label">Product Images</label>
                     <input asp-for="Images" class="form-control">
                     <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                        <span asp-validation-for="MaterialIds"></span>
+                        <span asp-validation-for="Images"></span>
                     </div>
                 </div>
                 <a asp-action="Table" asp-controller="Product">
