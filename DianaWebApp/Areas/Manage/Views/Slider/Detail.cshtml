@@ -5,10 +5,17 @@
     <div class="content-wrapper">
         <div class="container">
 
-            <h4 class="mb-1">Slider Title: </h4>
-            <h3>@Model.Title</h3>
-            <h4 class="mb-1">Slider Description: </h4>
-            <h3>@Model.Description</h3>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h4 class="mb-1">Slider Title: </h4>
+                    <h3>@Model.Title</h3>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-1">Slider Description: </h4>
+                    <h3>@Model.Description</h3>
+                </div>
+            </div>
+            
             <h4 class="mb-1">Slider Image: </h4>
             <div style="width:200px">
                 <img width="100%" src="~/Upload/SliderImages/@Model.ImgUrl">

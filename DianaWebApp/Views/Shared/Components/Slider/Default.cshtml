@@ -1,0 +1,20 @@
+﻿@model List<Slider>
+
+@foreach (var item in Model)
+{
+    <div class="swiper-slide">
+        <div class="slider-content-area" data-bg-img="../Upload/SliderImages/@item.ImgUrl">
+            <div class="container">
+                <div class="row align-items-center ">
+                    <div class="col-12">
+                        <div class="slider-content">
+                            <h5 class="sub-title">@item.Title</h5>
+                            <h2 class="title">@item.Description</h2>
+                            <a class="btn-slider" href="shop.html">Shop Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

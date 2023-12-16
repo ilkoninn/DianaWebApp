@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject LayoutService layoutService
+@{
+    Dictionary<string, string> settings = await layoutService.GetSettingsAsync();
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -77,9 +83,9 @@
                 <div class="row align-items-center justify-content-between position-relative">
                     <div class="col">
                         <div class="header-logo-area">
-                            <a href="index.html">
-                                <img class="logo-main" src="~/assets/img/logo.png" alt="Logo" />
-                                <img class="logo d-none" src="~/assets/img/logo-light.png" alt="Logo" />
+                            <a asp-controller="Home" asp-action="Index">
+                                <img class="logo-main" src="~/Upload/LogoImage/@settings["Logo"]" alt="Logo" />
+                                <img class="logo d-none" src="~/Upload/LogoImage/@settings["Logo"]" alt="Logo" />
                             </a>
                         </div>
                     </div>
@@ -312,13 +318,14 @@
                             <div class="widget-item">
                                 <div class="footer-logo-area">
                                     <a href="index.html">
-                                        <img class="logo-main" src="~/assets/img/logo-light.png" alt="Logo" />
+                                        <img class="logo-main" src="~/Upload/LogoImage/@settings["Logo"]" alt="Logo" />
                                     </a>
                                 </div>
-                                <p>People have been using natural objects, such as tree stumps, rocks and moss, as furniture since the beginning of human civilisation.</p>
-                                <p>Your current address goes to here,120 example, country.</p>
-                                <p>+12546 687 987  / +15425 987 541</p>
-                                <p>demo@example.com www.example.com</p>
+                                <p>@settings["Description"]</p>
+                                <p>@settings["Address"]</p>
+                                <p>@settings["Phone"]</p>
+                                <p>@settings["Website"]</p>
+                                <p>@settings["Email"]</p>
                             </div>
                             <!--== End widget Item ==-->
                         </div>
@@ -365,12 +372,11 @@
                                 <h4 class="widget-title">Follow us</h4>
                                 <div class="widget-menu-wrap">
                                     <ul class="nav-menu">
-                                        <li><a href="#/">Facebook</a></li>
-                                        <li><a href="#/">Twitter</a></li>
-                                        <li><a href="#/">Instagram</a></li>
-                                        <li><a href="#/">LinkedIn</a></li>
-                                        <li><a href="#/">Google Plus</a></li>
-                                        <li><a href="#/">YouTube</a></li>
+                                        <li><a href="@settings["Facebook"]">Facebook</a></li>
+                                        <li><a href="@settings["Twitter/X"]">Twitter</a></li>
+                                        <li><a href="@settings["Instagram"]">Instagram</a></li>
+                                        <li><a href="@settings["LinkedIn"]">LinkedIn</a></li>
+                                        <li><a href="@settings["Youtube"]">YouTube</a></li>
                                     </ul>
                                 </div>
                             </div>

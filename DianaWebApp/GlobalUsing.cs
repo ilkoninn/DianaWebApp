@@ -9,3 +9,6 @@ global using DianaWebApp.Helper;
 global using Microsoft.AspNetCore.Authorization;
 global using DianaWebApp.Enums;
 global using DianaWebApp.ModelViews.Account;
+global using DianaWebApp.Services;
+global using DianaWebApp.Models.Account;
+

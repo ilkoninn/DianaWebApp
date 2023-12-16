@@ -12,6 +12,8 @@ namespace DianaWebApp.DAL
         public DbSet<Size> Sizes { get; set; }  
         public DbSet<Material> Materials { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Settings> Settings { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
         // Product Model Section
         public DbSet<Product> Products { get; set; }

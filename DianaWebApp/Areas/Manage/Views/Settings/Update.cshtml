@@ -1,0 +1,108 @@
+﻿@model Dictionary<string, string>
+
+
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="container">
+            <h4 class="mb-5">Update Settings</h4>
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    @foreach (var item in Model
+                    .Where(x => x.Key != "Description" && x.Key != "Logo")
+                    .ToList()
+                    )
+                    {
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label asp-for="@item.Value" name="settings[@item.Key]" class="form-label">@item.Key</label>
+                                <input asp-for="@item.Value" name="settings[@item.Key]" class="form-control">
+                                <div style="color: red; margin-top: 10px; margin-left: 10px;">
+                                    <span name="settings[@item.Key]" asp-validation-for="@item.Value"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h4 class="mb-1">Logo:</h4>
+                            <div style="width: 200px;">
+                                <img width="100%" src="~/Upload/LogoImage/@Model["Logo"]">
+                            </div>
+                            <div class="mb-3">
+                                <label name="ImageFile" class="form-label">Website Logo</label>
+                                <input type="file" id="logoFile" name="Logo" class="form-control">
+                                <input type="hidden" name="settings[Logo]" value="@Model["Logo"]">
+                                <div style="color: red; margin-top: 10px; margin-left: 10px;">
+                                    <span id="logoValidationMessage" name="settings[Logo]"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="mb-1">Description:</h4>
+                            <textarea name="settings[Description]" style="height: 200px" class="form-control">
+                                @Model["Description"]
+                            </textarea>
+                            <div style="color: red; margin-top: 10px; margin-left: 10px;">
+                                <span name="settings[Description]" asp-validation-for="@Model["Description"]"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <a asp-action="Table" asp-controller="Slider">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button asp-controller="Settings" asp-action="Detail" class="btn btn-secondary">Cancel</button>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
+                Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from
+                BootstrapDash.
+            </span>
+            <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">
+                Copyright © 2021. All rights
+                reserved.
+            </span>
+        </div>
+    </footer>
+    <!-- partial -->
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var logoInput = document.getElementById('logoFile');
+        var logoValidationError = document.getElementById('logoValidationMessage');
+
+        logoInput.addEventListener('change', function () {
+            var file = this.files[0];
+
+            if (!file) {
+                logoValidationError.textContent = "Logo file is required.";
+                return;
+            }
+            if (!file.type.startsWith('image')) {
+                logoValidationError.textContent = "Please select an image file.";
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                logoValidationError.textContent = "Image size must be lower than 2 MB!";
+                return;
+            }
+
+            logoValidationError.textContent = "";
+        });
+    });
+</script>
+
+<!-- main-panel ends -->

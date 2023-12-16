@@ -1,7 +1,4 @@
 
-
-using Microsoft.AspNetCore.Identity;
-
 namespace DianaWebApp
 {
     public class Program
@@ -30,6 +27,8 @@ namespace DianaWebApp
 
             }).AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<LayoutService>();
 
             var app = builder.Build();
 

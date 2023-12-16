@@ -1,0 +1,24 @@
+﻿
+<div class="container">
+    <div class="row">
+        <div class="col mt-5 mb-5">
+            <div class="col-6">
+                @if (ViewBag.IsSuccess)
+                {
+                    <div class="alert alert-success" role="alert">
+                        Your email has been confirmed successfully
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        Your email has not been confirmed!
+                    </div>
+                }
+                <a asp-action="Login" asp-controller="Account">
+                    <button type="button" class="btn btn-primary">Go To Login</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

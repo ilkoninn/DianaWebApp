@@ -1,19 +1,27 @@
 ﻿
-using DianaWebApp.Services;
+using Microsoft.CodeAnalysis.Operations;
+using Microsoft.Extensions.Primitives;
 using NuGet.Packaging.Signing;
+using System.Runtime.CompilerServices;
 
-namespace DianaWebApp.Controllers   
+namespace DianaWebApp.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly AppDbContext _db;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager)
+        private readonly LinkGenerator _linkGenerator;
+        private readonly IHttpContextAccessor _http;
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext db, LinkGenerator linkGenerator, IHttpContextAccessor http)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _db = db;
+            _linkGenerator = linkGenerator;
+            _http = http;
         }
 
         // <-- Register Section -->
@@ -46,7 +54,13 @@ namespace DianaWebApp.Controllers
             {
                 var result = await _userManager.CreateAsync(appUser, registerVM.Password);
                 await _userManager.AddToRoleAsync(appUser, "Member");
-                SendMailService.SendMessage(toUser: appUser.Email, userName: appUser.Name);
+                
+                string token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+                string url = _linkGenerator.GetUriByAction(_http.HttpContext, action: "ConfirmEmail", controller: "Account",
+                    values: new {token, appUser.Id} );
+
+                SendMailService.SendMessage(toUser: appUser.Email, userName: appUser.Name, url: url);
+
 
                 if (!result.Succeeded)
                 {
@@ -57,7 +71,7 @@ namespace DianaWebApp.Controllers
                     return View(registerVM);
                 }
 
-                return RedirectToAction(nameof(Login));
+                return Redirect(url);
             }
             else
             {
@@ -106,6 +120,15 @@ namespace DianaWebApp.Controllers
                 {
                     ModelState.AddModelError("", "Please, try again later!");
                 }
+                if(!await _userManager.IsEmailConfirmedAsync(user))
+                {
+                    ModelState.AddModelError(string.Empty, "You should be confirmed your Email!");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
 
                 await _signInManager.SignInAsync(user, loginVM.RememberMe);
 
@@ -145,6 +168,59 @@ namespace DianaWebApp.Controllers
             }
 
             return RedirectToAction(nameof(Index), "Home");
+        }
+
+        // <-- Subscription Section -->
+        [HttpPost]
+        public async Task<IActionResult> Subscription(SubscriptionVM subscriptionVM,string? returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Redirect(returnUrl);
+            }
+            
+            var oldSubscribe = await _db.Subscriptions.FirstOrDefaultAsync(x => x.Email == subscriptionVM.Email);
+
+            if(oldSubscribe == null)
+            {
+                Subscription newSubscription = new()
+                {
+                    Email = subscriptionVM.Email,
+                    IsActive = true,
+                    CreatedDate = DateTime.Now,
+                    UpdatedDate = DateTime.Now,
+                };
+
+                await _db.Subscriptions.AddAsync(newSubscription);
+                await _db.SaveChangesAsync();
+                SendMailService.SendMessage(toUser: subscriptionVM.Email, userName: "Diana Team");
+            }
+
+
+            if (returnUrl != null)
+            {
+                Redirect(returnUrl);
+            }
+
+            return RedirectToAction(nameof(Index), "Home");
+        }
+
+        // <-- Confirm Email Section -->
+        public async Task<IActionResult> ConfirmEmail(string Id, string token)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
+            {
+                ViewBag.IsSuccess = true;
+            }
+            else
+            {
+                ViewBag.IsSuccess = false;
+            }
+
+            return View();
         }
 
     }

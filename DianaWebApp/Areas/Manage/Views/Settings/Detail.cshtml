@@ -1,0 +1,89 @@
+﻿@inject LayoutService layoutService
+@{
+    Dictionary<string, string> settings = await layoutService.GetSettingsAsync();
+}
+
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h4 class="mb-1">Phone Number:</h4>
+                    <h3>@settings["Phone"]</h3>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-1">Address:</h4>
+                    <h3>@settings["Address"]</h3>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h4 class="mb-1">Website:</h4>
+                    <h3>@settings["Website"]</h3>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-1">Facebook:</h4>
+                    <h3>@settings["Facebook"]</h3>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h4 class="mb-1">Youtube: </h4>
+                    <h3>@settings["Youtube"]</h3>
+
+                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-1">LinkedIn: </h4>
+                    <h3>@settings["LinkedIn"]</h3>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h4 class="mb-1">Twitter / X: </h4>
+                    <h3>@settings["Twitter/X"]</h3>
+                    
+                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-1">Instagram: </h4>
+                    <h3>@settings["Instagram"]</h3>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h4 class="mb-1">Description:</h4>
+                    <p style="font-size: 15px">@settings["Description"]</p>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="mb-1">Email: </h4>
+                    <h3>@settings["Email"]</h3>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h4 class="mb-1">Logo:</h4>
+                    <div style="width: 200px;">
+                        <img width="100%" src="~/Upload/LogoImage/@settings["Logo"]">
+                    </div>
+                </div>
+            </div>
+            <a asp-controller="Settings" asp-action="Update" class="btn btn-secondary mt-5">Update</a>
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+    <!-- partial:../../partials/_footer.html -->
+    <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">
+                Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from
+                BootstrapDash.
+            </span>
+            <span class="float-none float-sm-end d-block mt-1 mt-sm-0 text-center">
+                Copyright © 2021. All rights
+                reserved.
+            </span>
+        </div>
+    </footer>
+    <!-- partial -->
+</div>
+<!-- main-panel ends -->
