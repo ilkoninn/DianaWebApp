@@ -66,9 +66,6 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 }
                 else
                 {
-
-                }
-                {
                     if (Logo != null)
                     {
                         if (!Logo.CheckType("image/"))
