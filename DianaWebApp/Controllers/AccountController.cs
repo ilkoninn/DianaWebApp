@@ -34,7 +34,6 @@ namespace DianaWebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-
             if (!ModelState.IsValid)
             {
                 return View(registerVM);
@@ -52,14 +51,16 @@ namespace DianaWebApp.Controllers
 
             if (resultEmail == null)
             {
+                Random random = new Random();
                 var result = await _userManager.CreateAsync(appUser, registerVM.Password);
-                await _userManager.AddToRoleAsync(appUser, "Member");
+                await _userManager.AddToRoleAsync(appUser, "Admin");
                 
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+                string pincode = $"{random.Next(1000, 10000)}";
                 string url = _linkGenerator.GetUriByAction(_http.HttpContext, action: "ConfirmEmail", controller: "Account",
-                    values: new {token, appUser.Id} );
+                    values: new { token, appUser.Id, pincode});
 
-                SendMailService.SendMessage(toUser: appUser.Email, userName: appUser.Name, url: url);
+                SendMailService.SendMessage(toUser: appUser.Email, userName: appUser.Name, pinCode: pincode);
 
 
                 if (!result.Succeeded)
@@ -102,23 +103,25 @@ namespace DianaWebApp.Controllers
 
                 if (user == null)
                 {
-                    ModelState.AddModelError("", "Username/Email or password is not valid!");
+                    ModelState.AddModelError("UsernameOrEmail", "Username/Email or password is not valid!");
                     return View();
                 }
 
             }
 
-            if (user != null)
+            var isConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+
+            if (isConfirmed)
             {
                 var result = _signInManager.CheckPasswordSignInAsync(user, loginVM.Password, true).Result;
 
                 if (!result.Succeeded)
                 {
-                    ModelState.AddModelError("", "Username/Email or password is not valid!");
+                    ModelState.AddModelError(string.Empty, "Username/Email or password is not valid!");
                 }
                 if (result.IsLockedOut)
                 {
-                    ModelState.AddModelError("", "Please, try again later!");
+                    ModelState.AddModelError(string.Empty, "Please, try again later!");
                 }
                 if(!await _userManager.IsEmailConfirmedAsync(user))
                 {
@@ -140,7 +143,7 @@ namespace DianaWebApp.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Username/Email or password is not valid!");
+                ModelState.AddModelError(string.Empty, "Your email is not confirmed, please check your email");
                 return View();
             }
         }
@@ -206,14 +209,28 @@ namespace DianaWebApp.Controllers
         }
 
         // <-- Confirm Email Section -->
-        public async Task<IActionResult> ConfirmEmail(string Id, string token)
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailVM confirmEmailVM,string Id, string token, string pincode)
         {
-            var user = await _userManager.FindByIdAsync(Id);
-            var result = await _userManager.ConfirmEmailAsync(user, token);
-
-            if (result.Succeeded)
+            if (!ModelState.IsValid)
             {
-                ViewBag.IsSuccess = true;
+                return View();
+            }
+
+            ViewBag.IsSuccess = true;
+
+            if(confirmEmailVM.Number1 == 0)
+            {
+                return View();
+            }
+
+            var postCode = $"{confirmEmailVM.Number1}{confirmEmailVM.Number2}{confirmEmailVM.Number3}{confirmEmailVM.Number4}";
+
+            if (postCode == pincode)
+            {
+                var user = await _userManager.FindByIdAsync(Id);
+                await _userManager.ConfirmEmailAsync(user, token);
+
+                return RedirectToAction(nameof(Login));
             }
             else
             {

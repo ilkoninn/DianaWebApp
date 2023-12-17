@@ -5,7 +5,7 @@ namespace DianaWebApp.Services
 {
     public static class SendMailService
     {
-        public static void SendMessage(string toUser, string userName, string url = "")
+        public static void SendMessage(string toUser, string userName, string pinCode = "")
         {
             if(userName == "Diana Team")
             {
@@ -42,10 +42,11 @@ namespace DianaWebApp.Services
                     {
                         From = new MailAddress("bd7h15zbx@code.edu.az"),
                         Subject = "Welcome to Diana Website",
-                        Body = $"<h1>Hello {userName}, " +
+                        Body = $"Hello {userName}, " +
                         $"Thank you for visiting our website. " +
-                        $"Please click this link for confirm email" +
-                        $"{url}",
+                        $"Please write this code to confirmation section\n" +
+                        $"\n" +
+                        $"Pincode: {pinCode}",
                         IsBodyHtml = true
                     };
 

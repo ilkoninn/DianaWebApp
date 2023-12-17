@@ -1,54 +1,40 @@
 ﻿@model RegisterVM
-<div class="container">
-    <div class="row">
-        <div class="col mt-5 mb-5">
+
+<div class="container mb-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
             <form method="post">
-                <div class="login-form">
-                    <h4 class="login-title">Register</h4>
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <label aps-for="Name">First Name</label>
-                            <input asp-for="Name" class="form-control" placeholder="First Name">
-                            <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                                <span asp-validation-for="Name"></span>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Register</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input asp-for="Name" class="form-control" placeholder="First Name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input asp-for="Surname" placeholder="Last Name" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input asp-for="Username" placeholder="Username" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input asp-for="Email" placeholder="Email" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input asp-for="Password" placeholder="Password" type="password" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                <input asp-for="ConfirmPassword" placeholder="Confirm Password" type="password" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                            <label aps-for="Surname">Last Name</label>
-                            <input asp-for="Surname" placeholder="Last Name" class="form-control">
-                            <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                                <span asp-validation-for="Surname"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label aps-for="Username">Username</label>
-                            <input asp-for="Username" placeholder="Username" class="form-control">
-                            <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                                <span asp-validation-for="Username"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label aps-for="Email">Email</label>
-                            <input asp-for="Email" placeholder="Email" class="form-control">
-                            <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                                <span asp-validation-for="Email"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label aps-for="Password">Password</label>
-                            <input asp-for="Password" placeholder="Password" class="form-control">
-                            <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                                <span asp-validation-for="Password"></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label aps-for="ConfirmPassword">Confirm Password</label>
-                            <input asp-for="ConfirmPassword" placeholder="Confirm Password" class="form-control">
-                            <div style="color: red; margin-top: 10px; margin-left: 10px;">
-                                <span asp-validation-for="ConfirmPassword"></span>
-                            </div>
-                        </div>
-                        <div class="col-auto">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="d-grid gap-2 mt-3">
                             <button type="submit" class="btn btn-primary">Register</button>
                         </div>
                     </div>

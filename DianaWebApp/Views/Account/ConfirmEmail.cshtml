@@ -1,24 +1,40 @@
-﻿
+﻿@model ConfirmEmailVM
+
 <div class="container">
-    <div class="row">
-        <div class="col mt-5 mb-5">
-            <div class="col-6">
-                @if (ViewBag.IsSuccess)
-                {
-                    <div class="alert alert-success" role="alert">
-                        Your email has been confirmed successfully
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5 mb-5">
+                <form method="post">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Confirmation Code</h5>
+                        <p class="card-text">Please enter the 4-digit code sent to your email.</p>
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <input asp-for="Number1" type="text" class="form-control text-center" style="width: 50px;margin: 5px;" maxlength="1" pattern="\d" required>
+                            </div>
+                            <div class="col-auto">
+                                <input asp-for="Number2" type="text" class="form-control text-center" style="width: 50px;margin: 5px;" maxlength="1" pattern="\d" required>
+                            </div>
+                            <div class="col-auto">
+                                <input asp-for="Number3" type="text" class="form-control text-center" style="width: 50px;margin: 5px;" maxlength="1" pattern="\d" required>
+                            </div>
+                            <div class="col-auto">
+                                <input asp-for="Number4" type="text" class="form-control text-center" style="width: 50px;margin: 5px;" maxlength="1" pattern="\d" required>
+                            </div>
+                        </div>
                     </div>
-                }
-                else
+                    <div class="col-12 mt-4 mb-5 text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+                @if (!ViewBag.IsSuccess)
                 {
                     <div class="alert alert-danger" role="alert">
-                        Your email has not been confirmed!
+                        Code is not valid!
                     </div>
                 }
-                <a asp-action="Login" asp-controller="Account">
-                    <button type="button" class="btn btn-primary">Go To Login</button>
-                </a>
             </div>
         </div>
     </div>
 </div>
+
