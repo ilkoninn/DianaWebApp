@@ -9,6 +9,8 @@ using static DianaWebApp.Areas.Manage.ViewModels.UpdateProductVM;
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "Admin")]
+
     public class ProductController : Controller
     {
         private readonly AppDbContext _db;

@@ -4,6 +4,8 @@ using DianaWebApp.Areas.Manage.ViewModels;
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "Admin")]
+
     public class SliderController : Controller
     {
         private readonly AppDbContext _db;

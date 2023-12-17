@@ -3,6 +3,7 @@
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "Admin")]
     public class SubscriptionController : Controller
     {
         private readonly AppDbContext _db;

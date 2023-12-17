@@ -14,16 +14,22 @@ namespace DianaWebApp
             });
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
             {
+                // Email Settings
+                options.User.RequireUniqueEmail = true;
+
                 // Password settings.
                 options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.User.RequireUniqueEmail = true;
 
                 // Lockout settings.
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.MaxFailedAccessAttempts = 3;
 
                 // User settings.
                 options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.";
+                options.Lockout.AllowedForNewUsers = true;
 
             }).AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();

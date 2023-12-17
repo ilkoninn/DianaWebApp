@@ -5,6 +5,7 @@ using System.Net.Sockets;
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly AppDbContext _db;
@@ -32,14 +33,14 @@ namespace DianaWebApp.Areas.Manage.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryVM createCategoryVM)
         {
-            if(createCategoryVM == null) return BadRequest();
-            
+            if (createCategoryVM == null) return BadRequest();
+
             // Check Category Section
             var existsSameCategoryName = await _db.Categories
                 .Where(x => !x.IsDeleted && x.Name == createCategoryVM.Name)
                 .FirstOrDefaultAsync() != null;
 
-            if(existsSameCategoryName)
+            if (existsSameCategoryName)
             {
                 ModelState.AddModelError("Name", "There is a same name category in Table!");
             }
@@ -70,7 +71,7 @@ namespace DianaWebApp.Areas.Manage.Controllers
                 .Where(x => !x.IsDeleted)
                 .FirstOrDefaultAsync(x => x.Id == Id);
 
-            if(category == null) return NotFound();
+            if (category == null) return NotFound();
 
             UpdateCategoryVM updateCategoryVM = new()
             {
@@ -83,11 +84,11 @@ namespace DianaWebApp.Areas.Manage.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateCategoryVM updateCategoryVM)
         {
-            if(updateCategoryVM.Id == null && updateCategoryVM.Id < 0) return BadRequest();
+            if (updateCategoryVM.Id == null && updateCategoryVM.Id < 0) return BadRequest();
             Category category = await _db.Categories
                 .Where(x => !x.IsDeleted)
                 .FirstOrDefaultAsync(x => x.Id == updateCategoryVM.Id);
-            if(category == null) return NotFound();
+            if (category == null) return NotFound();
 
 
             // Check Category Section 

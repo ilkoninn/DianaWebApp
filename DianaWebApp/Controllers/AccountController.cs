@@ -53,7 +53,7 @@ namespace DianaWebApp.Controllers
             {
                 Random random = new Random();
                 var result = await _userManager.CreateAsync(appUser, registerVM.Password);
-                await _userManager.AddToRoleAsync(appUser, "Admin");
+                await _userManager.AddToRoleAsync(appUser, UserRole.Admin.ToString());
                 
                 string token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
                 string pincode = $"{random.Next(1000, 10000)}";
@@ -135,7 +135,7 @@ namespace DianaWebApp.Controllers
 
                 await _signInManager.SignInAsync(user, loginVM.RememberMe);
 
-                if (returnUrl != null)
+                if (returnUrl != null && !returnUrl.Contains("Login"))
                 {
                     return Redirect(returnUrl);
                 }

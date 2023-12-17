@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DianaWebApp.Areas.Manage.Controllers
 {
     [Area("Manage")]
+    [Authorize(Roles = "Admin")]
+
     public class SettingsController : Controller
     {
         private readonly AppDbContext _db;

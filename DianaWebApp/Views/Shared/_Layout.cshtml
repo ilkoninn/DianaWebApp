@@ -93,14 +93,14 @@
                         <div class="header-navigation-area">
                             <ul class="main-menu nav">
                                 <li class="has-submenu">
-                                    <a href="#/"><span>Home</span></a>
+                                    <a asp-controller="Home" asp-action="Index"><span>Home</span></a>
                                     @* <ul class="submenu-nav">
                                     <li><a href="index.html">Home - 1</a></li>
                                     <li><a href="index-two.html">Home - 2</a></li>
                                     </ul> *@
                                 </li>
                                 <li class="has-submenu full-width">
-                                    <a href="#/"><span>Shop</span></a>
+                                    <a asp-controller="Shop" asp-action="Index"><span>Shop</span></a>
                                     @* <ul class="submenu-nav submenu-nav-mega">
                                     <li class="mega-menu-item">
                                     <a href="#/" class="mega-title">Collection 01</a>
@@ -142,9 +142,9 @@
                                     </li>
                                     </ul> *@
                                 </li>
-                                <li class="has-submenu">
-                                    <a href="#/"><span>Products</span></a>
-                                    <ul class="submenu-nav">
+                                @* <li class="has-submenu">
+                                    <a  asp-controller="Product" asp-action="Index"><span>Products</span></a>
+                                    @* <ul class="submenu-nav">
                                         <li><a href="shop-single-new.html">New and sale badge product</a></li>
                                         <li><a href="shop-single-badge.html">New badge product</a></li>
                                         <li><a href="shop-single.html">Variable product</a></li>
@@ -156,8 +156,8 @@
                                         <li><a href="shop-single-shortcode.html">Without shortcode product</a></li>
                                         <li><a href="shop-single-video.html">Product with video</a></li>
                                     </ul>
-                                </li>
-                                <li class="has-submenu">
+                                </li> *@
+                                @* <li class="has-submenu">
                                     <a href="#/"><span>Pages</span></a>
                                     <ul class="submenu-nav">
                                         <li class="has-submenu">
@@ -170,13 +170,13 @@
                                             <li><a href="shop-list.html">Shop Listing View</a></li>
                                             <li><a href="shop-list-left-sidebar.html">Shop List left Sidebar</a></li>
                                             <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
-                                            </ul> *@
+                                            </ul>
                                         </li>
                                         <li><a href="shop-size-chart.html">Size chart</a></li>
                                         <li><a href="shop-shipping-policy.html">Shipping policy</a></li>
                                         <li><a href="about.html">About</a></li>
                                     </ul>
-                                </li>
+                                </li> *@
                                 <li class="has-submenu">
                                     <a href="#/"><span>Blog</span></a>
                                     @* <ul class="submenu-nav">
@@ -187,8 +187,9 @@
                                     <li><a href="single-blog-right-sidebar.html">Single Blog Right Sidebar</a></li>
                                     </ul> *@
                                 </li>
-                                <li><a href="contact.html"><span>Contact</span></a></li>
-                                <li>
+                                <li class="has-submenu"><a asp-controller="Contact" asp-action="Get"><span>Contact</span></a></li>
+                                <li class="has-submenu"><a asp-controller="Contact" asp-action="Get"><span>About</span></a></li>
+                                <li class="has-submenu">
                                     @if (User.Identity.IsAuthenticated)
                                     {
                                     <li>
@@ -354,7 +355,7 @@
                                 <h4 class="widget-title">Information</h4>
                                 <div class="widget-menu-wrap">
                                     <ul class="nav-menu">
-                                        <li><a href="login.html">Login</a></li>
+                                        <li><a asp-action="Login" asp-controller="Account" asp-route-ReturnUrl=@Context.Request.Path>Login</a></li>
                                         <li><a href="#/">My Account</a></li>
                                         <li><a href="#/">Terms & Conditions</a></li>
                                         <li><a href="shop-shipping-policy.html">Shipping policy</a></li>

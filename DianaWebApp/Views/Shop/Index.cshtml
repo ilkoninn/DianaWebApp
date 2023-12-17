@@ -1,0 +1,299 @@
+﻿<main class="main-content">
+    <!--== Start Page Header Area Wrapper ==-->
+    <div class="page-header-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <h4 class="title" data-aos="fade-down" data-aos-duration="1200">Products</h4>
+                        <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1000">
+                            <ul class="breadcrumb">
+                                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                                <li class="breadcrumb-sep">-</li>
+                                <li>Products</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area Wrapper ==-->
+    <!--== Start Product Area Wrapper ==-->
+    <section class="product-area product-grid-list-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="product-header-wrap">
+                        <div class="grid-list-option">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <button class="nav-link active" id="nav-grid-tab" data-bs-toggle="tab" data-bs-target="#nav-grid" type="button" role="tab" aria-controls="nav-grid" aria-selected="true"><span data-bg-img="../assets/img/icons/1.webp"></span></button>
+                                    <button class="nav-link" id="nav-list-tab" data-bs-toggle="tab" data-bs-target="#nav-list" type="button" role="tab" aria-controls="nav-list" aria-selected="false"><span data-bg-img="../assets/img/icons/1.webp"></span></button>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="show-product-area">
+                            <p class="show-product">Showing 1 - 15 of 33 result</p>
+                        </div>
+                        <div class="nav-short-area">
+                            <div class="toolbar-shorter">
+                                <label for="SortBy">Sort by</label>
+                                <select id="SortBy" class="form-select" aria-label="Sort by">
+                                    <option value="manual">Featured</option>
+                                    <option value="best-selling">Best Selling</option>
+                                    <option value="title-ascending" selected>Alphabetically, A-Z</option>
+                                    <option value="title-descending">Alphabetically, Z-A</option>
+                                    <option value="price-ascending">Price, low to high</option>
+                                    <option value="price-descending">Price, high to low</option>
+                                    <option value="created-descending">Date, new to old</option>
+                                    <option value="created-ascending">Date, old to new</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-body-wrap">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
+                                <div class="row">
+                                    @await Component.InvokeAsync("Product", 4)
+                                </div>
+                                <!--== Start Pagination Wrap ==-->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="pagination-content-wrap">
+                                            <nav class="pagination-nav">
+                                                <ul class="pagination justify-content-center">
+                                                    <li><a class="disabled active prev" href="#/"><i class="fa fa-angle-left"></i>Back</a></li>
+                                                    <li><a class="disabled" href="#/">1</a></li>
+                                                    <li><a href="#/">2</a></li>
+                                                    <li><a href="#/">3</a></li>
+                                                    <li><a class="next" href="#/">Next <i class="fa fa-angle-right"></i></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--== End Pagination Wrap ==-->
+                            </div>
+                            <div class="tab-pane fade" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
+                                <div class="row">
+                                    @await Component.InvokeAsync("Product", 5)
+                                </div>
+                                <!--== Start Pagination Wrap ==-->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="pagination-content-wrap">
+                                            <nav class="pagination-nav">
+                                                <ul class="pagination justify-content-center">
+                                                    <li><a class="disabled active prev" href="#/"><i class="fa fa-angle-left"></i>Back</a></li>
+                                                    <li><a class="disabled" href="#/">1</a></li>
+                                                    <li><a href="#/">2</a></li>
+                                                    <li><a href="#/">3</a></li>
+                                                    <li><a class="next" href="#/">Next <i class="fa fa-angle-right"></i></a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--== End Pagination Wrap ==-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <!--== Start Product Sidebar Wrapper ==-->
+                    <div class="product-sidebar-wrapper">
+                        <!--== Start Product Sidebar Item ==-->
+                        <div class="product-sidebar-item">
+                            <h4 class="product-sidebar-title">Search</h4>
+                            <div class="product-sidebar-body">
+                                <div class="product-sidebar-search-form">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <input class="form-control" type="search" placeholder="Enter key words">
+                                            <button type="submit" class="btn-src">Search</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Product Sidebar Item ==-->
+                        <!--== Start Sidebar Item ==-->
+                        <div class="product-sidebar-item">
+                            <h4 class="product-sidebar-title">Categories</h4>
+                            <div class="product-sidebar-body">
+                                <div class="product-sidebar-nav-menu">
+                                    <a href="#/">Chair <span>(12)</span></a>
+                                    <a href="#/">Featured <span>(12)</span></a>
+                                    <a href="#/">Home page <span>(1)</span></a>
+                                    <a href="#/">Sofa <span>(12)</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Sidebar Item ==-->
+                        <!--== Start Sidebar Item ==-->
+                        <div class="product-sidebar-item">
+                            <h4 class="product-sidebar-title">Vendors</h4>
+                            <div class="product-sidebar-body">
+                                <div class="product-sidebar-nav-menu">
+                                    <a href="#/">Vendor <span>1</span></a>
+                                    <a href="#/">Vendor <span>10</span></a>
+                                    <a href="#/">Vendor <span>11</span></a>
+                                    <a href="#/">Vendor <span>2</span></a>
+                                    <a href="#/">Vendor <span>3</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Sidebar Item ==-->
+                        <!--== Start Sidebar Item ==-->
+                        <div class="product-sidebar-item">
+                            <h4 class="product-sidebar-title">Products Types</h4>
+                            <div class="product-sidebar-body">
+                                <div class="product-sidebar-nav-menu">
+                                    <a href="#/">Type <span>1</span></a>
+                                    <a href="#/">Type <span>10</span></a>
+                                    <a href="#/">Type <span>11</span></a>
+                                    <a href="#/">Type <span>2</span></a>
+                                    <a href="#/">Type <span>3</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Sidebar Item ==-->
+                        <!--== Start Sidebar Item ==-->
+                        <div class="product-sidebar-item mb-5 pb-2">
+                            <h4 class="product-sidebar-title">Color</h4>
+                            <div class="product-sidebar-body">
+                                <div class="product-sidebar-color-menu">
+                                    <div class="red"></div>
+                                    <div class="green"></div>
+                                    <div class="blue"></div>
+                                    <div class="yellow"></div>
+                                    <div class="white"></div>
+                                    <div class="gold"></div>
+                                    <div class="gray"></div>
+                                    <div class="magenta"></div>
+                                    <div class="maroon"></div>
+                                    <div class="navy"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Sidebar Item ==-->
+                        <!--== Start Sidebar Item ==-->
+                        <div class="product-sidebar-item mb-5 pb-2">
+                            <h4 class="product-sidebar-title">Size</h4>
+                            <div class="product-sidebar-body">
+                                <div class="product-sidebar-size-menu">
+                                    <ul>
+                                        <li><a href="#/">s</a></li>
+                                        <li><a href="#/">m</a></li>
+                                        <li><a href="#/">l</a></li>
+                                        <li><a href="#/">xl</a></li>
+                                        <li><a href="#/">xxl</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Sidebar Item ==-->
+                        <!--== Start Sidebar Item ==-->
+                        <div class="product-sidebar-item mb-5 pb-2">
+                            <h4 class="product-sidebar-title">Tags</h4>
+                            <div class="product-sidebar-body">
+                                <div class="product-sidebar-tag-menu">
+                                    <ul>
+                                        <li><a href="#/">black</a></li>
+                                        <li><a href="#/">blue</a></li>
+                                        <li><a href="#/">fiber</a></li>
+                                        <li><a href="#/">gold</a></li>
+                                        <li><a href="#/">gray</a></li>
+                                        <li><a href="#/">green</a></li>
+                                        <li><a href="#/">l</a></li>
+                                        <li><a href="#/">leather</a></li>
+                                        <li><a href="#/">m</a></li>
+                                        <li><a href="#/">magenta</a></li>
+                                        <li><a href="#/">maroon</a></li>
+                                        <li><a href="#/">metal</a></li>
+                                        <li><a href="#/">navy</a></li>
+                                        <li><a href="#/">orange</a></li>
+                                        <li><a href="#/">pink</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Sidebar Item ==-->
+                        <!--== Start Sidebar Item ==-->
+                        <div class="product-sidebar-item">
+                            <h4 class="product-sidebar-title">Banner</h4>
+                            <div class="product-sidebar-body">
+                                <!--== Start Product Item ==-->
+                                <div class="product-sidebar-item">
+                                    <div class="thumb">
+                                        <a href="single-product-simple.html">
+                                            <img class="w-100" src="../assets/img/slider/slider-05.jpg" alt="Image-HasTech">
+                                        </a>
+                                    </div>
+                                </div>
+                                <!--== End Product Item ==-->
+                            </div>
+                        </div>
+                        <!--== End Sidebar Item ==-->
+                    </div>
+                    <!--== End Product Sidebar Wrapper ==-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Product Area Wrapper ==-->
+    <!--== Start Feature Area Wrapper ==-->
+    <section class="feature-area">
+        <div class="feature-container">
+            <div class="row no-gutter">
+                <div class="feature-col col-xl-3 col-md-6 col-12">
+                    <div class="feature-icon-box">
+                        <div class="inner-content">
+                            <div class="icon-box" data-bg-img="../assets/img/icons/1.jpg"></div>
+                            <div class="content">
+                                <h3 class="title">Free home delivery</h3>
+                                <p>Provide free home delivery for all product over $100</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-col col-xl-3 col-md-6 col-12">
+                    <div class="feature-icon-box">
+                        <div class="inner-content">
+                            <div class="icon-box" data-bg-img="../assets/img/icons/1.jpg"></div>
+                            <div class="content">
+                                <h3 class="title">Quality Products</h3>
+                                <p>We ensure the product quality that is our main goal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-col col-xl-3 col-md-6 col-12">
+                    <div class="feature-icon-box">
+                        <div class="inner-content">
+                            <div class="icon-box" data-bg-img="../assets/img/icons/1.jpg"></div>
+                            <div class="content">
+                                <h3 class="title">3 Days Return</h3>
+                                <p>Return product within 3 days for any product you buy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-col col-xl-3 col-md-6 col-12">
+                    <div class="feature-icon-box">
+                        <div class="inner-content">
+                            <div class="icon-box" data-bg-img="../assets/img/icons/1.jpg"></div>
+                            <div class="content">
+                                <h3 class="title">Online Support</h3>
+                                <p>We ensure the product quality that you can trust easily</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End Feature Area Wrapper ==-->
+</main>
